@@ -20,7 +20,9 @@ public class PluralizadorApplication {
 	public RespuestaModificacion palabrasPlurales(@RequestBody List<String> palabras) {
 
 		List<String> resultado = new ArrayList<>();
+		List<String> textoContadores = new ArrayList<>();
 		List<Integer> contadores = new ArrayList<>(List.of(0,0,0,0));
+
 
 		for(String palabra : palabras){
 			palabra = palabra.toLowerCase();
@@ -43,14 +45,19 @@ public class PluralizadorApplication {
 					contadores.set(3, contadores.get(3) + 1);
 			}
 		}
-		return new RespuestaModificacion(resultado, contadores);
+		textoContadores.add("Contador regla 1: " + contadores.get(0));
+		textoContadores.add("Contador regla 2: " + contadores.get(1));
+		textoContadores.add("Contador regla 3: " + contadores.get(2));
+		textoContadores.add("Contador regla 4: " + contadores.get(3));
+
+		return new RespuestaModificacion(resultado, textoContadores);
 	}
 
 	private static class RespuestaModificacion {
 		private List<String> palabrasModificadas;
-		private List<Integer> contadores;
+		private List<String> contadores;
 
-		public RespuestaModificacion(List<String> palabrasModificadas, List<Integer> contadores) {
+		public RespuestaModificacion(List<String> palabrasModificadas, List<String> contadores) {
 			this.palabrasModificadas = palabrasModificadas;
 			this.contadores = contadores;
 		}
@@ -59,7 +66,7 @@ public class PluralizadorApplication {
 			return palabrasModificadas;
 		}
 
-		public List<Integer> getContadores() {
+		public List<String> getContadores() {
 			return contadores;
 		}
 	}
