@@ -19,10 +19,17 @@ public class PluralizadorApplication {
 	@PostMapping("/pluralizador")
 	public RespuestaModificacion palabrasPlurales(@RequestBody List<String> palabras) {
 
+		//Se crean las listas que contendran los resultados de las transformaciones.
+
 		List<String> resultado = new ArrayList<>();
 		List<String> textoContadores = new ArrayList<>();
 		List<Integer> contadores = new ArrayList<>(List.of(0,0,0,0));
 
+
+		//Se recorre la lista de palabras con un ciclo forEach.
+		//Luego cada una de estas palabras es transformada a minúsculas.
+		//Y usando la condicional switch, dependiendo de la regla, se pasa la palabra a plural.
+		//Por ultimo, se despliega el resultado en formato JSON.
 
 		for(String palabra : palabras){
 			palabra = palabra.toLowerCase();
@@ -52,6 +59,8 @@ public class PluralizadorApplication {
 
 		return new RespuestaModificacion(resultado, textoContadores);
 	}
+
+	//Clase pivote para recibir los resultados y desplegarlos adecuadamente.
 
 	private static class RespuestaModificacion {
 		private List<String> palabrasModificadas;
